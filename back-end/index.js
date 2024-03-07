@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser"); //body-parser is used to convert json format into javascript object.
-const taskRoutes = require("./routes/task_routes");
+const productRoutes = require("./routes/product_routes");
 const userRoutes = require("./routes/user_routes");
 const cors = require("cors");
 
@@ -19,7 +19,7 @@ app.use(cors(
 ));
 
 //route MiddleWare
-app.use(taskRoutes);
+app.use(productRoutes);
 app.use(userRoutes);
 
 // coonect app with MongoDB

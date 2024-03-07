@@ -1,97 +1,97 @@
 const express = require("express");
 const router = express.Router();
-const Task = require("../models/tasks");
+const Product = require("../models/product");
 
-// save task
-router.post("/new_task", (req, res) => {
-  const newTask = new Task(req.body);
+// save product
+router.post("/new_product", (req, res) => {
+  const newProduct = new Product(req.body);
 
-  newTask
+  newProduct
     .save()
     .then((result) => {
       console.log(result);
       return res.status(200).json({
         success: true,
-        message: "Task Creating Success",
+        message: "Product Creating Success",
       });
     })
     .catch((err) => {
       console.error(err);
       return res.status(400).json({
         success: false,
-        message: "Task Creating Fail",
+        message: "Product Creating Fail",
       });
     });
 });
 
-// get tasks
-router.get("/view_tasks", (req, res) => {
-  Task.find()
+// get products
+router.get("/view_products", (req, res) => {
+  Product.find()
     .then((result) => {
       return res.status(200).json({
         success: true,
-        tasks: result,
+        products: result,
       });
     })
     .catch((err) => {
       console.error(err);
       return res.status(400).json({
         success: false,
-        message: "Tasks Loading Fail",
+        message: "Products Loading Fail",
       });
     });
 });
 
-//get task by id
-router.get("/get_task/:id", (req, res) => {
-  const task_id = req.params.id;
+//get product by id
+router.get("/get_product/:id", (req, res) => {
+  const product_id = req.params.id;
 
-  Task.findById(task_id)
+  Product.findById(product_id)
     .then((result) => {
       return res.status(200).json({
         success: true,
-        task: result,
+        product: result,
       });
     })
     .catch((err) => {
       console.error(err);
       return res.status(400).json({
         success: false,
-        message: "Task Loading Fail",
+        message: "Product Loading Fail",
       });
     });
 });
 
-// update task
-router.put("/update_task/:id", (req, res) => {
-  const task_id = req.params.id;
+// update product
+router.put("/update_product/:id", (req, res) => {
+  const product_id = req.params.id;
 
-  Task.findByIdAndUpdate(task_id, { $set: req.body })
+  Product.findByIdAndUpdate(product_id, { $set: req.body })
     .then((result) => {
       console.log(result);
       return res.status(200).json({
         success: true,
-        message: "Task Updated Succefully",
+        message: "Product Updated Succefully",
       });
     })
     .catch((err) => {
       console.error(err);
       return res.status(400).json({
         success: false,
-        message: "Task Updated Fail",
+        message: "Product Updated Fail",
       });
     });
 });
 
-// delete task
-router.delete("/delete_task/:id", (req, res) => {
-  const task_id = req.params.id;
+// delete product
+router.delete("/delete_product/:id", (req, res) => {
+  const product_id = req.params.id;
 
-  Task.findByIdAndDelete(task_id)
+  Product.findByIdAndDelete(product_id)
     .then((result) => {
       return res.status(200).json({
         success: true,
-        deletedTask: result,
+        deletedProduct: result,
         message: "Delete Successfully",
       });
     })

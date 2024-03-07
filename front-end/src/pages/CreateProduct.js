@@ -1,10 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import NavBar from "./NavBar";
 
-function UpdateTask() {
-  const { id } = useParams();
+function CreateProduct() {
   const [message, setMessage] = useState("");
   const [taskDetails, setTaskDetails] = useState({
     taskName: "",
@@ -15,32 +13,15 @@ function UpdateTask() {
     taskStatus: "",
   });
 
-  useEffect(() => {
-    loadTask();
-  }, []);
-
   const onInputChange = (e) => {
     setTaskDetails({ ...taskDetails, [e.target.name]: e.target.value });
-  };
-
-  const loadTask = async () => {
-    await axios
-      .get(`/get_task/${id}`)
-      .then((response) => {
-        if (response.data.success) {
-          setTaskDetails(response.data.task);
-        }
-      })
-      .catch((error) => {
-        setMessage(error);
-      });
   };
 
   const submit = async (e) => {
     e.preventDefault();
 
     await axios
-      .put(`/update_task/${id}`, taskDetails)
+      .post("/new_task", taskDetails)
       .then((response) => {
         if (response.data.success) {
           setMessage(response.data.message);
@@ -91,14 +72,14 @@ function UpdateTask() {
                     ></path>
                   </svg>
                   <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">
-                    Update Task
+                    Create Task
                   </span>
                 </div>
               </li>
             </ol>
           </nav>
           <h2 className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-gray-700">
-            Update Task
+            Create New Task
           </h2>
 
           <div>{message}</div>
@@ -153,6 +134,7 @@ function UpdateTask() {
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
+                  required
                 />
                 <label
                   htmlFor="addedDate"
@@ -160,17 +142,7 @@ function UpdateTask() {
                 >
                   Select Added Date
                 </label>
-                <input
-                  type="text"
-                  name="addedDate"
-                  value={taskDetails.addedDate}
-                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  required
-                  disabled
-                />
               </div>
-
               <div className="relative z-0 w-full mb-6 group">
                 <input
                   type="date"
@@ -180,6 +152,7 @@ function UpdateTask() {
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
+                  required
                 />
                 <label
                   htmlFor="dueDate"
@@ -187,15 +160,6 @@ function UpdateTask() {
                 >
                   Select Due Date
                 </label>
-                <input
-                  type="text"
-                  name="addedDate"
-                  value={taskDetails.dueDate}
-                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  required
-                  disabled
-                />
               </div>
             </div>
             <br />
@@ -248,7 +212,7 @@ function UpdateTask() {
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Update Task
+              Create Task
             </button>
           </form>
         </div>
@@ -257,4 +221,4 @@ function UpdateTask() {
   );
 }
 
-export default UpdateTask;
+export default CreateProduct;

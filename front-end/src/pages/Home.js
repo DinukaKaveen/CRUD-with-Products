@@ -5,66 +5,64 @@ import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 
 function Home() {
-  const [tasks, setTasks] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    loadTasks();
+    loadProducts();
   }, []);
 
-  const loadTasks = async () => {
-    const result = await axios.get("/view_tasks");
-    setTasks(result.data.tasks);
+  const loadProducts = async () => {
+    const result = await axios.get("/view_products");
+    setProducts(result.data.products);
   };
 
-  const deleteTask = async (id) => {
-    await axios.delete(`/delete_task/${id}`);
-    loadTasks();
+  const deleteProduct = async (id) => {
+    await axios.delete(`/delete_product/${id}`);
+    loadProducts();
   };
 
   const columns = [
     {
-      name: "Task Name",
-      selector: (row) => row.taskName,
-      sortable: true,
-    },
-    {
-      name: "Task Description",
-      selector: (row) => row.taskDescription,
-      sortable: true,
-    },
-    {
-      name: "Added Date",
-      selector: (row) => row.addedDate,
-      sortable: true,
-    },
-    {
-      name: "Due Date",
-      selector: (row) => row.dueDate,
-      sortable: true,
-    },
-    {
-      name: "Priority",
-      sortable: true,
-      selector: (row) => row.priority,
-    },
-    {
-      name: "Task Status",
-      sortable: true,
+      name: "Active",
+      sortable: false,
       selector: (row) => (
         <div>
-          {row.taskStatus === "Completed" && (
-            <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-              {row.taskStatus}
-            </span>
-          )}
-
-          {row.taskStatus === "Pending" && (
-            <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
-              {row.taskStatus}
-            </span>
-          )}
+          <label className="inline-flex items-center mb-5 cursor-pointer">
+            <input type="checkbox" value="" className="sr-only peer" checked />
+            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+          </label>
         </div>
       ),
+    },
+    {
+      name: "Product Name",
+      selector: (row) => row.productName,
+      sortable: true,
+    },
+    {
+      name: "SKU",
+      selector: (row) => row.sku,
+      sortable: true,
+    },
+    {
+      name: "Created Date",
+      selector: (row) => row.createdDate,
+      sortable: true,
+    },
+    {
+      name: "Retail Price",
+      selector: (row) => row.retailPrice,
+      sortable: true,
+    },
+    {
+      name: "Sale Price",
+      sortable: true,
+      selector: (row) => row.salePrice,
+    },
+    {
+      name: "Lowest Price",
+      sortable: true,
+      selector: (row) => row.lowestPrice,
     },
     {
       name: "Action",
@@ -72,7 +70,7 @@ function Home() {
       selector: (row) => (
         <div>
           <Link
-            to={`/update_task/${row._id}`}
+            to={`/update_product/${row._id}`}
             type="button"
             className="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 font-medium rounded-lg px-2.5 py-1.5 text-sm text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400"
           >
@@ -81,7 +79,7 @@ function Home() {
 
           <button
             type="button"
-            onClick={() => deleteTask(row._id)}
+            onClick={() => deleteProduct(row._id)}
             className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg px-2.5 py-1.5 text-sm text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600"
           >
             Delete
@@ -97,14 +95,14 @@ function Home() {
     setSearchText(event.target.value);
   };
 
-  const filteredData = tasks.filter(
+  const filteredData = products.filter(
     (item) =>
-      item.taskName.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.taskDescription.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.addedDate.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.dueDate.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.priority.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.taskStatus.toLowerCase().includes(searchText.toLowerCase())
+      item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.sku.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.createdDate.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.retailPrice.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.salePrice.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.lowestPrice.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -133,9 +131,11 @@ function Home() {
             </ol>
           </nav>
           <h2 className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-gray-700">
-            List of Tasks
+            Products
           </h2>
-          <br />
+          <p class="text-xl text-gray-900 font-extralight dark:text-white">
+            Manage and Add New Product
+          </p>
 
           <DataTable
             columns={columns}
