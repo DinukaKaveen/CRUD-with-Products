@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 
 function CreateProduct() {
   const [message, setMessage] = useState("");
-  const [taskDetails, setTaskDetails] = useState({
+  const [productDetails, setProductDetails] = useState({
     taskName: "",
     taskDescription: "",
     addedDate: "",
@@ -14,14 +14,14 @@ function CreateProduct() {
   });
 
   const onInputChange = (e) => {
-    setTaskDetails({ ...taskDetails, [e.target.name]: e.target.value });
+    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
   };
 
   const submit = async (e) => {
     e.preventDefault();
 
     await axios
-      .post("/new_task", taskDetails)
+      .post("/new_product", productDetails)
       .then((response) => {
         if (response.data.success) {
           setMessage(response.data.message);
@@ -91,7 +91,7 @@ function CreateProduct() {
                 type="text"
                 name="taskName"
                 id="taskName"
-                value={taskDetails.taskName}
+                value={productDetails.taskName}
                 onChange={(e) => onInputChange(e)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
@@ -110,7 +110,7 @@ function CreateProduct() {
                 type="text"
                 name="taskDescription"
                 id="taskDescription"
-                value={taskDetails.taskDescription}
+                value={productDetails.taskDescription}
                 onChange={(e) => onInputChange(e)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
@@ -130,7 +130,7 @@ function CreateProduct() {
                   type="date"
                   name="addedDate"
                   id="addedDate"
-                  value={taskDetails.addedDate}
+                  value={productDetails.addedDate}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
@@ -148,7 +148,7 @@ function CreateProduct() {
                   type="date"
                   name="dueDate"
                   id="dueDate"
-                  value={taskDetails.dueDate}
+                  value={productDetails.dueDate}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
@@ -168,7 +168,7 @@ function CreateProduct() {
                 <select
                   name="priority"
                   id="priority"
-                  value={taskDetails.priority}
+                  value={productDetails.priority}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
@@ -190,7 +190,7 @@ function CreateProduct() {
                 <select
                   name="taskStatus"
                   id="taskStatus"
-                  value={taskDetails.taskStatus}
+                  value={productDetails.taskStatus}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
