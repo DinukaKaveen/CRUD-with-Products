@@ -19,7 +19,7 @@ app.use(cors(
 ));
 
 //route MiddleWare
-app.use(productRoutes);
+app.use(productRoutes); 
 app.use(userRoutes);
 
 // coonect app with MongoDB
