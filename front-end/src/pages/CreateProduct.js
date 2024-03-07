@@ -5,12 +5,13 @@ import NavBar from "./NavBar";
 function CreateProduct() {
   const [message, setMessage] = useState("");
   const [productDetails, setProductDetails] = useState({
-    taskName: "",
-    taskDescription: "",
-    addedDate: "",
-    dueDate: "",
-    priority: "",
-    taskStatus: "",
+    productName: "",
+    sku: "",
+    createdDate: "",
+    retailPrice: "",
+    salePrice: "",
+    lowestPrice: "",
+    activeStatus: "",
   });
 
   const onInputChange = (e) => {
@@ -36,7 +37,7 @@ function CreateProduct() {
 
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
           <nav className="flex mb-4" aria-label="Breadcrumb">
@@ -72,139 +73,157 @@ function CreateProduct() {
                     ></path>
                   </svg>
                   <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">
-                    Create Task
+                    Create Product
                   </span>
                 </div>
               </li>
             </ol>
           </nav>
           <h2 className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-gray-700">
-            Create New Task
+            Create New Product
           </h2>
 
           <div>{message}</div>
           <br />
 
           <form onSubmit={(e) => submit(e)}>
-            <div className="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="taskName"
-                id="taskName"
-                value={productDetails.taskName}
-                onChange={(e) => onInputChange(e)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="taskName"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Task Name
-              </label>
-            </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <textarea
-                rows={3}
-                type="text"
-                name="taskDescription"
-                id="taskDescription"
-                value={productDetails.taskDescription}
-                onChange={(e) => onInputChange(e)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="taskDescription"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Task Description
-              </label>
-            </div>
             <br />
             <div className="grid md:grid-cols-2 md:gap-6">
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  type="date"
-                  name="addedDate"
-                  id="addedDate"
-                  value={productDetails.addedDate}
+                  type="text"
+                  name="productName"
+                  id="productName"
+                  value={productDetails.productName}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                 />
                 <label
-                  htmlFor="addedDate"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  htmlFor="productName"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Select Added Date
+                  Product Name
                 </label>
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  type="date"
-                  name="dueDate"
-                  id="dueDate"
-                  value={productDetails.dueDate}
+                  type="text"
+                  name="sku"
+                  id="sku"
+                  value={productDetails.sku}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                 />
                 <label
-                  htmlFor="dueDate"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  htmlFor="sku"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Select Due Date
+                  SKU
                 </label>
               </div>
             </div>
             <br />
             <div className="grid md:grid-cols-2 md:gap-6">
               <div className="relative z-0 w-full mb-6 group">
-                <select
-                  name="priority"
-                  id="priority"
-                  value={productDetails.priority}
+                <input
+                  type="text"
+                  name="retailPrice"
+                  id="retailPrice"
+                  value={productDetails.retailPrice}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
-                >
-                  <option>Select</option>
-                  <option>High</option>
-                  <option>Moderate</option>
-                  <option>Low</option>
-                </select>
+                />
                 <label
-                  htmlFor="priority"
+                  htmlFor="retailPrice"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Retail Price
+                </label>
+              </div>
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="salePrice"
+                  id="salePrice"
+                  value={productDetails.salePrice}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="salePrice"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Sale Price
+                </label>
+              </div>
+            </div>
+            <br />
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="lowestPrice"
+                  id="lowestPrice"
+                  value={productDetails.lowestPrice}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="lowestPrice"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Lowest Price
+                </label>
+              </div>
+            </div>
+            <br />
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="date"
+                  name="createdDate"
+                  id="createdDate"
+                  value={productDetails.createdDate}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="createdDate"
                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Priority
+                  Create Date
                 </label>
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <select
-                  name="taskStatus"
-                  id="taskStatus"
-                  value={productDetails.taskStatus}
+                  name="activeStatus"
+                  id="activeStatus"
+                  value={productDetails.activeStatus}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                 >
-                  <option>Select</option>
-                  <option>Pending</option>
-                  <option>Completed</option>
+                  <option>Active</option>
+                  <option>Not Active</option>
                 </select>
                 <label
-                  htmlFor="taskStatus"
+                  htmlFor="activeStatus"
                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Task Status
+                  Active Status
                 </label>
               </div>
             </div>
@@ -212,7 +231,7 @@ function CreateProduct() {
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Create Task
+              Create Product
             </button>
           </form>
         </div>
