@@ -83,6 +83,25 @@ router.put("/update_product/:id", (req, res) => {
     });
 });
 
+//update product status
+router.put("/update_product_status/:id", (req, res) => {
+  const product_id = req.params.id;
+
+  Product.findByIdAndUpdate(product_id, { $set: req.body })
+    .then((result) => {
+      console.log(result);
+      return res
+        .status(200)
+        .json({ success: true, message: "Product Status Updated" });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res
+        .status(400)
+        .json({ success: false, message: "Fail to Update Product Status" });
+    });
+});
+
 // delete product
 router.delete("/delete_product/:id", (req, res) => {
   const product_id = req.params.id;
