@@ -6,29 +6,30 @@ import NavBar from "./NavBar";
 function UpdateProduct() {
   const { id } = useParams();
   const [message, setMessage] = useState("");
-  const [taskDetails, setTaskDetails] = useState({
-    taskName: "",
-    taskDescription: "",
-    addedDate: "",
-    dueDate: "",
-    priority: "",
-    taskStatus: "",
+  const [productDetails, setProductDetails] = useState({
+    productName: "",
+    sku: "",
+    createdDate: "",
+    retailPrice: "",
+    salePrice: "",
+    lowestPrice: "",
+    activeStatus: "",
   });
 
   useEffect(() => {
-    loadTask();
+    loadProduct();
   }, []);
 
   const onInputChange = (e) => {
-    setTaskDetails({ ...taskDetails, [e.target.name]: e.target.value });
+    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
   };
 
-  const loadTask = async () => {
+  const loadProduct = async () => {
     await axios
-      .get(`/get_task/${id}`)
+      .get(`/get_product/${id}`)
       .then((response) => {
         if (response.data.success) {
-          setTaskDetails(response.data.task);
+          setProductDetails(response.data.product);
         }
       })
       .catch((error) => {
@@ -40,7 +41,7 @@ function UpdateProduct() {
     e.preventDefault();
 
     await axios
-      .put(`/update_task/${id}`, taskDetails)
+      .put(`/update_product/${id}`, productDetails)
       .then((response) => {
         if (response.data.success) {
           setMessage(response.data.message);
@@ -55,7 +56,7 @@ function UpdateProduct() {
 
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
           <nav className="flex mb-4" aria-label="Breadcrumb">
@@ -105,142 +106,153 @@ function UpdateProduct() {
           <br />
 
           <form onSubmit={(e) => submit(e)}>
-            <div className="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="taskName"
-                id="taskName"
-                value={taskDetails.taskName}
-                onChange={(e) => onInputChange(e)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="taskName"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Task Name
-              </label>
+            <br />
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="productName"
+                  id="productName"
+                  value={productDetails.productName}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="productName"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Product Name
+                </label>
+              </div>
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="sku"
+                  id="sku"
+                  value={productDetails.sku}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="sku"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  SKU
+                </label>
+              </div>
             </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <textarea
-                rows={3}
-                type="text"
-                name="taskDescription"
-                id="taskDescription"
-                value={taskDetails.taskDescription}
-                onChange={(e) => onInputChange(e)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="taskDescription"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Task Description
-              </label>
+            <br />
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="retailPrice"
+                  id="retailPrice"
+                  value={productDetails.retailPrice}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="retailPrice"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Retail Price (Rs.)
+                </label>
+              </div>
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="salePrice"
+                  id="salePrice"
+                  value={productDetails.salePrice}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="salePrice"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Sale Price (Rs.)
+                </label>
+              </div>
+            </div>
+            <br />
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="lowestPrice"
+                  id="lowestPrice"
+                  value={productDetails.lowestPrice}
+                  onChange={(e) => onInputChange(e)}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="lowestPrice"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Lowest Price (Rs.)
+                </label>
+              </div>
             </div>
             <br />
             <div className="grid md:grid-cols-2 md:gap-6">
               <div className="relative z-0 w-full mb-6 group">
                 <input
                   type="date"
-                  name="addedDate"
-                  id="addedDate"
-                  value={taskDetails.addedDate}
+                  name="createdDate"
+                  id="createdDate"
+                  value={productDetails.createdDate}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
+                  required
                 />
                 <label
-                  htmlFor="addedDate"
+                  htmlFor="createdDate"
                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Select Added Date
+                  Create Date
                 </label>
                 <input
                   type="text"
                   name="addedDate"
-                  value={taskDetails.addedDate}
-                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  value={productDetails.createdDate}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                   disabled
                 />
               </div>
-
-              <div className="relative z-0 w-full mb-6 group">
-                <input
-                  type="date"
-                  name="dueDate"
-                  id="dueDate"
-                  value={taskDetails.dueDate}
-                  onChange={(e) => onInputChange(e)}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                />
-                <label
-                  htmlFor="dueDate"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Select Due Date
-                </label>
-                <input
-                  type="text"
-                  name="addedDate"
-                  value={taskDetails.dueDate}
-                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  required
-                  disabled
-                />
-              </div>
-            </div>
-            <br />
-            <div className="grid md:grid-cols-2 md:gap-6">
               <div className="relative z-0 w-full mb-6 group">
                 <select
-                  name="priority"
-                  id="priority"
-                  value={taskDetails.priority}
+                  name="activeStatus"
+                  id="activeStatus"
+                  value={productDetails.activeStatus}
                   onChange={(e) => onInputChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                 >
-                  <option>Select</option>
-                  <option>High</option>
-                  <option>Moderate</option>
-                  <option>Low</option>
+                  <option>Select Status</option>
+                  <option>Active</option>
+                  <option>Not Active</option>
                 </select>
                 <label
-                  htmlFor="priority"
+                  htmlFor="activeStatus"
                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Priority
-                </label>
-              </div>
-              <div className="relative z-0 w-full mb-6 group">
-                <select
-                  name="taskStatus"
-                  id="taskStatus"
-                  value={taskDetails.taskStatus}
-                  onChange={(e) => onInputChange(e)}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  required
-                >
-                  <option>Select</option>
-                  <option>Pending</option>
-                  <option>Completed</option>
-                </select>
-                <label
-                  htmlFor="taskStatus"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Task Status
+                  Active Status
                 </label>
               </div>
             </div>
@@ -248,7 +260,7 @@ function UpdateProduct() {
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Update Task
+              Update Product
             </button>
           </form>
         </div>
