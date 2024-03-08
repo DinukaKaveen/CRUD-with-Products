@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
+
 function UserLogin() {
   const [message, setMessage] = useState("");
   const [loginData, setLoginData] = useState({
@@ -17,7 +19,7 @@ function UserLogin() {
     e.preventDefault();
 
     await axios
-      .post("/login", loginData)
+      .post("http://localhost:8000/login", loginData)
       .then((response) => {
         if (response.data.success) {
           window.location.href = "/products"

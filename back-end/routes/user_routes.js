@@ -135,6 +135,33 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//protected route
+router.get("/protected", async (req, res) => { 
+  const token = req.cookies["access-token"];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.id);
+      if (user) {
+        res.status(200).json({
+          protected: true,
+          user: user,
+          message: "User verified and Access Given",
+        });
+      } else {
+        res.status(404).json({ protected: false, message: "User Not Found" });
+      }
+    } catch (error) {
+      res
+        .status(403)
+        .json({ protected: false, message: "Invalid Token or Expired" });
+    }
+  } else {
+    res.status(404).json({ protected: false, message: "Token Not Found" });
+  }
+});
+
 //-------------------------------------
 // Email sending function (nodemailer)
 //-------------------------------------

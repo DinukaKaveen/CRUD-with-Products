@@ -1,20 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
+axios.defaults.withCredentials = true;
+
 function Home() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    loadProducts();
+    protectedRoute();
   }, []);
 
-  const checkboxChange = async (id, currentStatus) => {
-
+  const protectedRoute = async () => {
     await axios
-      .put(`/update_product_status/${id}`, {
+      .get("http://localhost:8000/protected")
+      .then((response) => {
+        if (response.data.protected) {
+          loadProducts();
+          setUser(response.data.user);
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        navigate("/");
+        console.error(error);
+      });
+  };
+
+  const checkboxChange = async (id, currentStatus) => {
+    await axios
+      .put(`http://localhost:8000/update_product_status/${id}`, {
         activeStatus: currentStatus === "Active" ? "Not Active" : "Active",
       })
       .then((response) => {
@@ -30,12 +50,12 @@ function Home() {
   };
 
   const loadProducts = async () => {
-    const result = await axios.get("/view_products");
+    const result = await axios.get("http://localhost:8000/view_products");
     setProducts(result.data.products);
   };
 
   const deleteProduct = async (id) => {
-    await axios.delete(`/delete_product/${id}`);
+    await axios.delete(`http://localhost:8000/delete_product/${id}`);
     loadProducts();
   };
 
