@@ -7,6 +7,7 @@ import UpdateProduct from './pages/UpdateProduct';
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
 import UserVerify from './pages/UserVerify';
+import UserProfile from './pages/UserProfile'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/:id/verify/:token' exact element={<UserVerify/>}></Route>
           <Route path='/create_product' exact element={<CreateProduct/>}></Route>
           <Route path='/update_product/:id' exact element={<UpdateProduct/>}></Route>
+          <Route path='/user_profile' exact element={<UserProfile/>}></Route>
         </Routes>
       </div>
       </BrowserRouter>
