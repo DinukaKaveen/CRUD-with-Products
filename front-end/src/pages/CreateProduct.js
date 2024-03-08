@@ -1,8 +1,32 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 function CreateProduct() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    protectedRoute();
+  }, []);
+
+  const protectedRoute = async () => {
+    await axios
+      .get("http://localhost:8000/protected")
+      .then((response) => {
+        if (response.data.protected) {
+          setUser(response.data.user);
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        navigate("/");
+        console.error(error);
+      });
+  };
+
   const [message, setMessage] = useState("");
   const [productDetails, setProductDetails] = useState({
     productName: "",

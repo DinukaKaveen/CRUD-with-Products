@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 
 function UpdateProduct() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState([]);
   const [message, setMessage] = useState("");
   const [productDetails, setProductDetails] = useState({
     productName: "",
@@ -17,8 +19,25 @@ function UpdateProduct() {
   });
 
   useEffect(() => {
-    loadProduct();
+    protectedRoute();
   }, []);
+
+  const protectedRoute = async () => {
+    await axios
+      .get("http://localhost:8000/protected")
+      .then((response) => {
+        if (response.data.protected) {
+          setUser(response.data.user);
+          loadProduct();
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        navigate("/");
+        console.error(error);
+      });
+  };
 
   const onInputChange = (e) => {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
