@@ -10,6 +10,15 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const Token = require("../models/token");
 
+const cookieExpireIn = 1000 * 60 * 60;
+
+// create token
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+};
+
 // user register
 router.post("/register", async (req, res) => {
   try {
@@ -104,7 +113,18 @@ router.post("/login", async (req, res) => {
       });
     }
 
+    //if everything verified
     if (user && validPassword && user.verified) {
+      //create token
+      const token = createToken(user._id);
+      //store token in cookie
+      res.cookie("access-token", token, {
+        path: "/",
+        expires: new Date(Date.now() + cookieExpireIn),
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+      });
       return res
         .status(200)
         .json({ success: true, message: "Login successufully" });

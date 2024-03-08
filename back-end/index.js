@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser"); //body-parser is used to convert json format into javascript object.
+const cookieParser = require("cookie-parser");
 const productRoutes = require("./routes/product_routes");
 const userRoutes = require("./routes/user_routes");
 const cors = require("cors");
@@ -10,6 +11,7 @@ const app = express();
 
 //app MiddleWare
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(cors(
   {
     origin: ["http://localhost:3000"],
