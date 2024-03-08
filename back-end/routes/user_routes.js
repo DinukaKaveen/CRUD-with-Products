@@ -136,7 +136,7 @@ router.post("/login", async (req, res) => {
 });
 
 //protected route
-router.get("/protected", async (req, res) => { 
+router.get("/protected", async (req, res) => {
   const token = req.cookies["access-token"];
 
   if (token) {
@@ -160,6 +160,20 @@ router.get("/protected", async (req, res) => {
   } else {
     res.status(404).json({ protected: false, message: "Token Not Found" });
   }
+});
+
+//get user by id
+router.get("/get_user/:id", async (req, res) => {
+  const user_id = req.params.id;
+
+  await User.findById(user_id)
+    .then((result) => {
+      res.status(200).json({ getUser: true, user: result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).json({ getUser: false });
+    });
 });
 
 //-------------------------------------
