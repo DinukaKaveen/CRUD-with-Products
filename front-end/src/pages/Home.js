@@ -55,8 +55,13 @@ function Home() {
   };
 
   const deleteProduct = async (id) => {
-    await axios.delete(`http://localhost:8000/delete_product/${id}`);
-    loadProducts();
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    if (shouldDelete) {
+      await axios.delete(`http://localhost:8000/delete_product/${id}`);
+      loadProducts();
+    }
   };
 
   const columns = [
