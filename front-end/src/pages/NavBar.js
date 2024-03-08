@@ -180,10 +180,20 @@ function NavBar() {
                 </span>
               </Link>
             </li>
+            <li>
+              <Link
+                to={"/settings"}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Settings
+                </span>
+              </Link>
+            </li>
 
             <li>
               <a
-                href="#"
+                href="/"
                 className="hidden absolute bottom-0 left-0 justify-left p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-r border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
