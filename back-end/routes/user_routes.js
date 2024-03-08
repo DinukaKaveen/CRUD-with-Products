@@ -32,15 +32,21 @@ router.post("/register", async (req, res) => {
     });
 
     // Save the user to the database
-    await user.save();
+    await user
+      .save()
+      .then(() => {
+        // Send verification email
+        sendVerificationEmail(user.email, user._id);
 
-    // Send verification email
-    sendVerificationEmail(user.email, user._id);
-
-    res.status(200).json({
-      message:
-        "User registered successfully. Check your email for verification.",
-    });
+        res.status(200).json({
+          message:
+            "User registered successfully. Check your email for verification.",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -73,7 +79,9 @@ router.post("/login", async (req, res) => {
     // check if the email is already registered
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(401).json({ success: false, message: "Your email is not registered" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Your email is not registered" });
     }
 
     // check password
@@ -82,27 +90,30 @@ router.post("/login", async (req, res) => {
       user.password
     );
     if (!validPassword) {
-      return res.status(401).json({ success: false, message: "Invalid Password" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid Password" });
     }
 
     // resend verification email (if not verified)
     if (!user.verified) {
       sendVerificationEmail(user.email, user._id);
-      return res
-        .status(401)
-        .json({ success: false, message: "An Email sent to your account please verify" });
+      return res.status(401).json({
+        success: false,
+        message: "An Email sent to your account please verify",
+      });
     }
 
     if (user && validPassword && user.verified) {
-      return res.status(200).json({ success: true, message: "Login successufully" });
+      return res
+        .status(200)
+        .json({ success: true, message: "Login successufully" });
     }
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
-
 
 //-------------------------------------
 // Email sending function (nodemailer)
