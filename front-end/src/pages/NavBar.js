@@ -71,7 +71,7 @@ function NavBar() {
                   alt="FlowBite Logo"
                 />
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  Flowbite
+                  CEMEX
                 </span>
               </a>
             </div>
@@ -101,13 +101,14 @@ function NavBar() {
                       className="text-sm text-gray-900 dark:text-white"
                       role="none"
                     >
-                      Neil Sims
+                      {user.firstName}
+                      <span> {user.lastName}</span>
                     </p>
                     <p
                       className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                       role="none"
                     >
-                      neil.sims@flowbite.com
+                      {user.email}
                     </p>
                   </div>
                   <ul className="py-1" role="none">
@@ -147,7 +148,7 @@ function NavBar() {
             Cemex HRM
           </p>
           <p className="text-sm text-gray-900 font-medium dark:text-white">
-            {user.firstName}
+            Welcome {user.firstName}
           </p>
           <br />
           <ul className="space-y-2 font-medium">
@@ -178,6 +179,30 @@ function NavBar() {
                   User Profile
                 </span>
               </Link>
+            </li>
+
+            <li>
+              <a
+                href="#"
+                className="hidden absolute bottom-0 left-0 justify-left p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-r border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
+                  />
+                </svg>
+                <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
+              </a>
             </li>
           </ul>
         </div>
