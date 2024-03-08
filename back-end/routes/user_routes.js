@@ -176,6 +176,12 @@ router.get("/get_user/:id", async (req, res) => {
     });
 });
 
+//sign out
+router.get("/sign_out", async (req, res) => {
+  res.clearCookie("access-token");
+  res.json({ signout: true, message: "Sign Out successfully" });
+});
+
 //-------------------------------------
 // Email sending function (nodemailer)
 //-------------------------------------

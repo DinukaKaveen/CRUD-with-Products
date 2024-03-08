@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   const [user, setUser] = useState([]);
@@ -29,6 +29,19 @@ function NavBar() {
       .then((response) => {
         if (response.data.getUser) {
           setUser(response.data.user);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signout = async () => {
+    await axios
+      .get("http://localhost:8000/sign_out")
+      .then((response) => {
+        if (response.data.signout) {
+          window.location.href = "/";
         }
       })
       .catch((error) => {
@@ -114,7 +127,7 @@ function NavBar() {
                   <ul className="py-1" role="none">
                     <li>
                       <a
-                        href="/"
+                        href="/settings"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
@@ -123,7 +136,8 @@ function NavBar() {
                     </li>
                     <li>
                       <a
-                        href="/"
+                        href="#"
+                        onClick={signout}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
@@ -185,15 +199,14 @@ function NavBar() {
                 to={"/settings"}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Settings
-                </span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Settings</span>
               </Link>
             </li>
 
             <li>
               <a
-                href="/"
+                href="#"
+                onClick={signout}
                 className="hidden absolute bottom-0 left-0 justify-left p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-r border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
